@@ -4,7 +4,8 @@ const dotenv=require('dotenv');
 const cors=require('cors');
 const connectDb=require('./config/db');
 
-const authRoutes=require('./routes/authRouter')
+const authRoutes=require('./routes/authRouter');
+const jobRoutes=require('./routes/jobRoute');
 
 dotenv.config();
 
@@ -19,6 +20,8 @@ app.get('/',(req,res)=>{
 });
 
 app.use('/api/auth',authRoutes);
+
+app.use('/api/jobs',jobRoutes);
 
 const PORT=process.env.PORT||5000;
 
