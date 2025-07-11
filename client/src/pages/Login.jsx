@@ -25,7 +25,7 @@ const Login=()=>{
 const handleSubmit=async (e)=>{
     e.preventDefault();
     try{
-        const res=await axios.post(import.meta.env.REACT_APP_LOGIN_URL,form);
+        const res=await axios.post(import.meta.env.VITE_REACT_APP_LOGIN_URL,form);
         login(res.data);
         navigate(res.data.user.role === 'employer' ? '/employer-dashboard' : '/dashboard');
 

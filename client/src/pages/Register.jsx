@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState, } from "react";
 import axios from 'axios';
 
 import { AuthContext } from "../context/authContext";
@@ -31,7 +31,7 @@ const handleSubmit=async (e)=>{
     e.preventDefault();
 
     try{
-        const res=await axios.post(import.meta.env.REACT_APP_REGISTER_URL,form);
+        const res=await axios.post(import.meta.env.VITE_REACT_APP_REGISTER_URL,form);
         login(res.data);
 
        navigate(res.data.user.role === 'employer' ? '/employer-dashboard' : '/dashboard');
