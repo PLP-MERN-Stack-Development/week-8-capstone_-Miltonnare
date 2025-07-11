@@ -1,38 +1,35 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Register from './pages/Register';
 import Login from './pages/Login'
-import EmployerDashboard from './pages/employerDashboard';
+import EmployerDashboard from './pages/EmployerDashboard';
 import JobSeekerDashboard from './pages/JobSeekerDasboard';
 import ProtectedRoute from './components/ProtectedRoute';
+import Navbar from './components/Navbar';
+import { useContext } from 'react';
+import { AuthContext } from './context/authContext';
+
 function App(){
+  const { user, logout } = useContext(AuthContext);
 
   return(
     <BrowserRouter>
-    <Routes>
-      <Route path='/' element={<Register/>} />
-      <Route path="/login" element={<Login />} />
+      <Navbar user={user} onLogout={logout} />
+      <Routes>
+        <Route path='/' element={<Register/>} />
+        <Route path="/login" element={<Login />} />
 
-      <Route path="/dashboard" element={
-        <ProtectedRoute>
-
-          <JobSeekerDashboard />
-
+        <Route path="/dashboard" element={
+          <ProtectedRoute>
+            <JobSeekerDashboard />
           </ProtectedRoute>
-        
-        
         } />
 
-      <Route path="/employer-dashboard" element={
-        <ProtectedRoute>
-          
-          <EmployerDashboard />
-
+        <Route path="/employer-dashboard" element={
+          <ProtectedRoute>
+            <EmployerDashboard />
           </ProtectedRoute>
-       
         } />
-
-    </Routes>
-
+      </Routes>
     </BrowserRouter>
   )
 }
