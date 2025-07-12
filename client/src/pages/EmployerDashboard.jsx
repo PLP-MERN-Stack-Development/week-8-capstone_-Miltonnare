@@ -82,7 +82,7 @@ const EmployerDashboard = () => {
                             <p className="text-xl text-green-100">Manage your job postings and find the perfect candidates</p>
                         </div>
                         <div className="hidden md:block">
-                            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                            <div className="bg-white/10  rounded-lg p-4">
                                 <div className="text-sm text-green-100">Welcome back,</div>
                                 <div className="font-semibold">{user?.user?.name || 'Employer'}</div>
                             </div>
@@ -91,7 +91,7 @@ const EmployerDashboard = () => {
 
                     {/* Statistics Cards */}
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-8">
-                        <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 text-center">
+                        <div className="bg-white/10  rounded-lg p-6 text-center">
                             <div className="text-3xl font-bold mb-2">{totalJobs}</div>
                             <div className="text-green-100">Total Jobs Posted</div>
                         </div>
@@ -122,8 +122,10 @@ const EmployerDashboard = () => {
                         </div>
                         <button
                             onClick={() => {
+                                console.log('Opening modal...');
                                 setEditingJob(null);
                                 setShowJobForm(true);
+                                console.log('Modal state set to true');
                             }}
                             className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 flex items-center"
                         >
@@ -136,9 +138,10 @@ const EmployerDashboard = () => {
                 </div>
 
                 {/* Job Form Modal */}
+                {console.log('showJobForm state:', showJobForm)}
                 {showJobForm && (
-                    <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 p-4">
-                        <div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-gray-200">
+                    <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-[9999] p-4" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}>
+                        <div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-gray-200 relative z-[10000]">
                             <div className="p-6 border-b border-gray-200 bg-gradient-to-r from-green-50 to-emerald-50">
                                 <div className="flex items-center justify-between">
                                     <div>
