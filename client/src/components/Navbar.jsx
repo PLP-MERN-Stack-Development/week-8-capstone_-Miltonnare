@@ -29,10 +29,10 @@ const Navbar = () => {
   const navLinks = [
     { to: '/dashboard', label: 'JobSeeker Dashboard', show: isJobSeeker },
     { to: '/employer-dashboard', label: 'Employer Dashboard', show: isEmployer },
-    { to: '/', label: 'Home', show: true, isLandingLink: true },
-    { to: '/#about', label: 'About', show: true, isHashLink: true, hash: 'about' },
-    { to: '/#services', label: 'Services', show: true, isHashLink: true, hash: 'services' },
-    { to: '/#contact', label: 'Contact', show: true, isHashLink: true, hash: 'contact' },
+    { to: '/', label: 'Home', show: !user },
+    { to: '/#about', label: 'About', show: location.pathname === '/', isHashLink: true, hash: 'about' },
+    { to: '/#services', label: 'Services', show: location.pathname === '/', isHashLink: true, hash: 'services' },
+    { to: '/#contact', label: 'Contact', show: location.pathname === '/', isHashLink: true, hash: 'contact' },
     { to: '/register', label: 'Register', show: !user },
     { to: '/login', label: 'Login', show: !user },
   ];
