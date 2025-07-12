@@ -188,8 +188,15 @@ const JobSeekerDashboard = () => {
               </div>
               
               <div className="grid gap-6">
-                {filteredJobs.map(job => (
-                  <JobItem key={job._id} job={job} />
+                {filteredJobs.map((job, index) => (
+                  <JobItem 
+                    key={job._id || `job-${index}`} 
+                    job={job} 
+                    onApplySuccess={(jobId) => {
+                      // Refresh the jobs list to show updated application status
+                      fetchJobs();
+                    }}
+                  />
                 ))}
               </div>
             </>

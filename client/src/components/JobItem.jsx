@@ -1,5 +1,59 @@
 
-const JobItem = ({ job }) => {
+import { useState, useContext } from 'react';
+import axios from 'axios';
+import { AuthContext } from '../context/authContext';
+
+const JobItem = ({ job, onApplySuccess }) => {
+    const { user } = useContext(AuthContext);
+    const [isApplying, setIsApplying] = useState(false);
+    const [hasApplied, setHasApplied] = useState(false);
+    const [error, setError] = useState('');
+
+    // Check if user has already applied
+    const checkIfApplied = () => {
+        if (job.applications && user?.user?.id) {
+            return job.applications.some(app => app.user === user.user.id);
+        }
+        return false;
+    };
+
+    const handleApply = async () => {
+        if (!user) {
+            setError('Please login to apply for this job');
+            return;
+        }
+
+        setIsApplying(true);
+        setError('');
+
+        try {
+            const token = user.token;
+            const response = await axios.post(
+                `${import.meta.env.VITE_REACT_APP_JOBS_URL}/${job._id}/apply`,
+                {},
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+
+            setHasApplied(true);
+            if (onApplySuccess) {
+                onApplySuccess(job._id);
+            }
+        } catch (error) {
+            console.error('Error applying to job:', error);
+            if (error.response?.data?.message) {
+                setError(error.response.data.message);
+            } else {
+                setError('Failed to apply for this job. Please try again.');
+            }
+        } finally {
+            setIsApplying(false);
+        }
+    };
+
     const getTypeColor = (type) => {
         switch (type?.toLowerCase()) {
             case 'full-time':
@@ -74,12 +128,46 @@ const JobItem = ({ job }) => {
                         </div>
 
                         {/* Apply Button */}
-                        <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center">
-                            <svg className="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                            </svg>
-                            Apply Now
-                        </button>
+                        <div className="flex flex-col items-end space-y-2">
+                            {error && (
+                                <p className="text-red-500 text-sm">{error}</p>
+                            )}
+                            <button 
+                                onClick={handleApply}
+                                disabled={isApplying || hasApplied || checkIfApplied()}
+                                className={`px-6 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center ${
+                                    hasApplied || checkIfApplied()
+                                        ? 'bg-green-600 text-white cursor-not-allowed'
+                                        : isApplying
+                                        ? 'bg-gray-400 text-white cursor-not-allowed'
+                                        : 'bg-blue-600 hover:bg-blue-700 text-white'
+                                }`}
+                            >
+                                {isApplying ? (
+                                    <>
+                                        <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                        </svg>
+                                        Applying...
+                                    </>
+                                ) : hasApplied || checkIfApplied() ? (
+                                    <>
+                                        <svg className="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                                        </svg>
+                                        Applied
+                                    </>
+                                ) : (
+                                    <>
+                                        <svg className="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                        </svg>
+                                        Apply Now
+                                    </>
+                                )}
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
