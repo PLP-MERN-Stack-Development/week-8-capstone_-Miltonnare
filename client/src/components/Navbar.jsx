@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/authContext';
 
@@ -16,12 +16,25 @@ const Navbar = () => {
     navigate('/login');
   };
 
-  // Only show links relevant to the user's role
+  // Handle hash navigation
+  const handleHashClick = (e, hash) => {
+    e.preventDefault();
+    const element = document.getElementById(hash);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+ 
   const navLinks = [
     { to: '/dashboard', label: 'JobSeeker Dashboard', show: isJobSeeker },
     { to: '/employer-dashboard', label: 'Employer Dashboard', show: isEmployer },
+    { to: '/', label: 'Home', show: true, isLandingLink: true },
+    { to: '/#about', label: 'About', show: true, isHashLink: true, hash: 'about' },
+    { to: '/#services', label: 'Services', show: true, isHashLink: true, hash: 'services' },
+    { to: '/#contact', label: 'Contact', show: true, isHashLink: true, hash: 'contact' },
+    { to: '/register', label: 'Register', show: !user },
     { to: '/login', label: 'Login', show: !user },
-    { to: '/', label: 'Register', show: !user },
   ];
 
   return (
@@ -33,13 +46,24 @@ const Navbar = () => {
           </div>
           <div className="hidden md:flex space-x-4 items-center">
             {navLinks.filter(l => l.show).map(link => (
-              <Link
-                key={link.to}
-                to={link.to}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${location.pathname === link.to ? 'bg-blue-100 text-blue-700' : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600'}`}
-              >
-                {link.label}
-              </Link>
+              link.isHashLink ? (
+                <a
+                  key={link.to}
+                  href={link.to}
+                  onClick={(e) => handleHashClick(e, link.hash)}
+                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${location.pathname === link.to ? 'bg-blue-100 text-blue-700' : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600'}`}
+                >
+                  {link.label}
+                </a>
+              ) : (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${location.pathname === link.to ? 'bg-blue-100 text-blue-700' : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600'}`}
+                >
+                  {link.label}
+                </Link>
+              )
             ))}
             {user && (
               <button
@@ -71,14 +95,25 @@ const Navbar = () => {
       {menuOpen && (
         <div className="md:hidden px-2 pt-2 pb-3 space-y-1 bg-white shadow">
           {navLinks.filter(l => l.show).map(link => (
-            <Link
-              key={link.to}
-              to={link.to}
-              onClick={() => setMenuOpen(false)}
-              className={`block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${location.pathname === link.to ? 'bg-blue-100 text-blue-700' : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600'}`}
-            >
-              {link.label}
-            </Link>
+            link.isHashLink ? (
+              <a
+                key={link.to}
+                href={link.to}
+                onClick={(e) => { setMenuOpen(false); handleHashClick(e, link.hash); }}
+                className={`block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${location.pathname === link.to ? 'bg-blue-100 text-blue-700' : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600'}`}
+              >
+                {link.label}
+              </a>
+            ) : (
+              <Link
+                key={link.to}
+                to={link.to}
+                onClick={() => setMenuOpen(false)}
+                className={`block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${location.pathname === link.to ? 'bg-blue-100 text-blue-700' : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600'}`}
+              >
+                {link.label}
+              </Link>
+            )
           ))}
           {user && (
             <button
