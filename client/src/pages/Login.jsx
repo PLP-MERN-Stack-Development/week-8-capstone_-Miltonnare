@@ -32,7 +32,16 @@ const Login = () => {
         try {
             const res = await axios.post(import.meta.env.VITE_REACT_APP_LOGIN_URL, form);
             login(res.data);
-            navigate(res.data.user.role === 'employer' ? '/employer-dashboard' : '/dashboard');
+            
+            // Check if there's a stored redirect path
+            const redirectPath = sessionStorage.getItem('redirectAfterLogin');
+            if (redirectPath) {
+                sessionStorage.removeItem('redirectAfterLogin');
+                navigate(redirectPath);
+            } else {
+                // Default redirect based on role
+                navigate(res.data.user.role === 'employer' ? '/employer-dashboard' : '/dashboard');
+            }
         } catch (err) {
             setError(err.response?.data?.message || 'Login failed. Please try again.');
         } finally {

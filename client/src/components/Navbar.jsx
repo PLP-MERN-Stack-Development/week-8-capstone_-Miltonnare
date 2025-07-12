@@ -10,6 +10,12 @@ const Navbar = () => {
 
   const isEmployer = user?.user?.role === 'employer';
   const isJobSeeker = user?.user?.role === 'jobseeker';
+  
+  // Debug logging for role detection
+  console.log('User:', user);
+  console.log('User role:', user?.user?.role);
+  console.log('isEmployer:', isEmployer);
+  console.log('isJobSeeker:', isJobSeeker);
 
   const handleLogout = () => {
     logout();
@@ -27,8 +33,8 @@ const Navbar = () => {
 
  
   const navLinks = [
-    { to: '/dashboard', label: 'JobSeeker Dashboard', show: isJobSeeker },
-    { to: '/employer-dashboard', label: 'Employer Dashboard', show: isEmployer },
+    { to: '/dashboard', label: 'JobSeeker Dashboard', show: isJobSeeker && user },
+    { to: '/employer-dashboard', label: 'Employer Dashboard', show: isEmployer && user },
     { to: '/', label: 'Home', show: !user },
     { to: '/#about', label: 'About', show: location.pathname === '/', isHashLink: true, hash: 'about' },
     { to: '/#services', label: 'Services', show: location.pathname === '/', isHashLink: true, hash: 'services' },
