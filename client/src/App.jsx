@@ -8,6 +8,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Navbar from './components/Navbar';
 import { useContext } from 'react';
 import { AuthContext } from './context/authContext';
+import { Toaster } from 'react-hot-toast';
 
 function App(){
   const { user, logout } = useContext(AuthContext);
@@ -90,30 +91,33 @@ function App(){
   };
 
   return(
-    <BrowserRouter>
-      <Navbar user={user} onLogout={logout} />
-      <Routes>
-        {/* Public routes with authentication checks */}
-        <Route path='/' element={<LandingPageWrapper />} />
-        <Route path="/register" element={<RegisterWrapper />} />
-        <Route path="/login" element={<LoginWrapper />} />
+    <>
+      <Toaster position="top-right" />
+      <BrowserRouter>
+        <Navbar user={user} onLogout={logout} />
+        <Routes>
+          {/* Public routes with authentication checks */}
+          <Route path='/' element={<LandingPageWrapper />} />
+          <Route path="/register" element={<RegisterWrapper />} />
+          <Route path="/login" element={<LoginWrapper />} />
 
-        {/* Protected dashboard routes with role-based access */}
-        <Route path="/dashboard" element={<JobSeekerDashboardWrapper />} />
-        <Route path="/employer-dashboard" element={<EmployerDashboardWrapper />} />
+          {/* Protected dashboard routes with role-based access */}
+          <Route path="/dashboard" element={<JobSeekerDashboardWrapper />} />
+          <Route path="/employer-dashboard" element={<EmployerDashboardWrapper />} />
 
-        {/* Catch-all route - redirect to appropriate page */}
-        <Route path="*" element={
-          user ? (
-            user.user?.role === 'employer' ? 
-              <Navigate to="/employer-dashboard" replace /> : 
-              <Navigate to="/dashboard" replace />
-          ) : (
-            <Navigate to="/" replace />
-          )
-        } />
-      </Routes>
-    </BrowserRouter>
+          {/* Catch-all route - redirect to appropriate page */}
+          <Route path="*" element={
+            user ? (
+              user.user?.role === 'employer' ? 
+                <Navigate to="/employer-dashboard" replace /> : 
+                <Navigate to="/dashboard" replace />
+            ) : (
+              <Navigate to="/" replace />
+            )
+          } />
+        </Routes>
+      </BrowserRouter>
+    </>
   )
 }
 

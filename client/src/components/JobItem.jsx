@@ -2,6 +2,7 @@
 import { useState, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/authContext';
+import { toast } from 'react-hot-toast';
 
 const JobItem = ({ job, onApplySuccess }) => {
     const { user } = useContext(AuthContext);
@@ -20,6 +21,7 @@ const JobItem = ({ job, onApplySuccess }) => {
     const handleApply = async () => {
         if (!user) {
             setError('Please login to apply for this job');
+            toast.error('Please login to apply for this job');
             return;
         }
 
@@ -39,6 +41,7 @@ const JobItem = ({ job, onApplySuccess }) => {
             );
 
             setHasApplied(true);
+            toast.success('Application submitted!');
             if (onApplySuccess) {
                 onApplySuccess(job._id);
             }
@@ -46,8 +49,14 @@ const JobItem = ({ job, onApplySuccess }) => {
             console.error('Error applying to job:', error);
             if (error.response?.data?.message) {
                 setError(error.response.data.message);
+                if (error.response.data.message === 'You already applied for this job') {
+                    toast.error('You already applied');
+                } else {
+                    toast.error(error.response.data.message);
+                }
             } else {
                 setError('Failed to apply for this job. Please try again.');
+                toast.error('Failed to apply for this job. Please try again.');
             }
         } finally {
             setIsApplying(false);
