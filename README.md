@@ -1,47 +1,77 @@
-# MERN Stack Capstone Project
+# 💼 Jobs Parlour — MERN Stack Job Application Platform
 
-This assignment focuses on designing, developing, and deploying a comprehensive full-stack MERN application that showcases all the skills you've learned throughout the course.
+Jobs Parlour is a real-world job marketplace MVP built with the **MERN stack (MongoDB, Express.js, React, Node.js)**. It allows **employers** to post jobs and manage applications, while **job seekers** can browse jobs and apply — all within a secure, role-based system.
 
-## Assignment Overview
+---
 
-You will:
-1. Plan and design a full-stack MERN application
-2. Develop a robust backend with MongoDB, Express.js, and Node.js
-3. Create an interactive frontend with React.js
-4. Implement testing across the entire application
-5. Deploy the application to production
+## 📸 Screenshots
 
-## Getting Started
+Coming soon... 
 
-1. Accept the GitHub Classroom assignment
-2. Clone the repository to your local machine
-3. Follow the instructions in the `Week8-Assignment.md` file
-4. Plan, develop, and deploy your capstone project
+---
 
-## Files Included
+## 🚀 Features
 
-- `Week8-Assignment.md`: Detailed assignment instructions
+### 👥 Authentication & Roles
+- User Registration & Login with JWT
+- Role-based access: `employer` vs `jobseeker`
+- Protected dashboard routes
 
-## Requirements
+### 🧑‍💼 Employer Features
+- Post, edit, and delete jobs
+- View applicants per job
+- Export applicants as **CSV**
+- Manage dashboard
 
-- Node.js (v18 or higher)
-- MongoDB (local installation or Atlas account)
-- npm or yarn
-- Git and GitHub account
-- Accounts on deployment platforms (Render/Vercel/Netlify/etc.)
+### 🔍 Job Seeker Features
+- Browse all available jobs
+- Apply to jobs (only once)
+- Dashboard view of applied jobs 
 
-## Project Ideas
+### 💻 Tech Stack
 
-The `Week8-Assignment.md` file includes several project ideas, but you're encouraged to develop your own idea that demonstrates your skills and interests.
+| Layer      | Technology           |
+|------------|----------------------|
+| Frontend   | React, Tailwind CSS  |
+| State/Auth | Context API, JWT     |
+| Backend    | Express.js, Node.js  |
+| Database   | MongoDB + Mongoose   |
+| API Test   | Postman              |
+| Deployment | Render (backend), Vercel (frontend) |
 
-## Submission
+---
 
-Your project will be automatically submitted when you push to your GitHub Classroom repository. Make sure to:
+## 🏗️ Project Structure
 
-1. Commit and push your code regularly
-2. Include comprehensive documentation
-3. Deploy your application and add the live URL to your README.md
-4. Create a video demonstration and include the link in your README.md
+```bash
+jobs-parlour/
+├── client/            # React frontend
+│   └── src/
+│       ├── components/
+│       ├── pages/
+│       ├── context/   # AuthContext
+│       └── App.jsx
+├── server/            # Express backend
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   └── server.js
+
+
+🛡️ Security Notes
+
+Passwords are hashed with bcrypt
+
+JWT is used for authentication
+
+Routes are protected based on roles
+
+👨‍💻 Author
+Milton
+
+Built as part of a practical full-stack developer journey focused on real-world systems.
+
+
 
 ## Resources
 
