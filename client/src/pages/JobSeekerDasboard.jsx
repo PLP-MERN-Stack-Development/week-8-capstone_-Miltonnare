@@ -27,11 +27,11 @@ const JobSeekerDashboard = () => {
     fetchJobs();
   }, []);
 
-  // Filter jobs based on search term and filters
+  
   useEffect(() => {
     let filtered = jobs;
 
-    // Filter by search term
+    
     if (searchTerm) {
       filtered = filtered.filter(job =>
         job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -40,12 +40,11 @@ const JobSeekerDashboard = () => {
       );
     }
 
-    // Filter by job type
     if (selectedType !== 'all') {
       filtered = filtered.filter(job => job.Type === selectedType);
     }
 
-    // Filter by location
+    
     if (selectedLocation !== 'all') {
       filtered = filtered.filter(job => job.location === selectedLocation);
     }
@@ -53,11 +52,11 @@ const JobSeekerDashboard = () => {
     setFilteredJobs(filtered);
   }, [jobs, searchTerm, selectedType, selectedLocation]);
 
-  // Get unique job types and locations for filters
+  
   const jobTypes = ['all', ...new Set(jobs.map(job => job.Type))];
   const locations = ['all', ...new Set(jobs.map(job => job.location))];
 
-  // Calculate statistics
+  
   const totalJobs = jobs.length;
   const averageSalary = jobs.length > 0 
     ? Math.round(jobs.reduce((sum, job) => sum + job.salary, 0) / jobs.length)
@@ -66,7 +65,7 @@ const JobSeekerDashboard = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header Section */}
-      <div className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
+      <div className="bg-gradient-to-r from-orange-600 to-indigo-700 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="text-center">
             <h1 className="text-4xl font-bold mb-4">Job Seeker Dashboard</h1>
@@ -193,7 +192,7 @@ const JobSeekerDashboard = () => {
                     key={job._id || `job-${index}`} 
                     job={job} 
                     onApplySuccess={(jobId) => {
-                      // Refresh the jobs list to show updated application status
+                     
                       fetchJobs();
                     }}
                   />
