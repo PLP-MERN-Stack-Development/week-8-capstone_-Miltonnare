@@ -4,6 +4,7 @@ import { AuthContext } from "../context/authContext";
 import JobForm from "../components/JobForm";
 import JobCard from "../components/JobCard";
 
+
 const EmployerDashboard = () => {
     const { user } = useContext(AuthContext);
     const [jobs, setJobs] = useState([]);
@@ -83,7 +84,7 @@ const EmployerDashboard = () => {
                         </div>
                         <div className="hidden md:block">
                             <div className="bg-white/10  rounded-lg p-4">
-                                <div className="text-sm text-green-100">Welcome back,</div>
+                                <div className="text-sm text-violet-700">Welcome back,</div>
                                 <div className="font-semibold">{user?.user?.name || 'Employer'}</div>
                             </div>
                         </div>
