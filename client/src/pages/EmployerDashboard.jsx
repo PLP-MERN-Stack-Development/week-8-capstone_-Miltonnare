@@ -3,7 +3,7 @@ import axios from "axios";
 import { AuthContext } from "../context/authContext";
 import JobForm from "../components/JobForm";
 import JobCard from "../components/JobCard";
-import Modal from "../components/Modal";
+
 
 
 const EmployerDashboard = () => {
@@ -142,38 +142,31 @@ const EmployerDashboard = () => {
 
                 {/* Job Form Modal */}
                 {console.log('showJobForm state:', showJobForm)}
-               <Modal isOpen={showJobForm} onClose={() => {
-  setShowJobForm(false);
-  setEditingJob(null);
-}}>
-  <div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-gray-200 relative z-[10000]">
-    <div className="p-6 border-b border-gray-200 bg-gradient-to-r from-green-50 to-emerald-50">
-      <div className="flex items-center justify-between">
-        <div>
-          <h3 className="text-xl font-bold text-gray-900">
-            {editingJob ? 'Edit Job' : 'Post New Job'}
-          </h3>
-          <p className="text-sm text-gray-600 mt-1">
-            {editingJob
-              ? 'Update your job posting details'
-              : 'Create a new job posting to attract candidates'}
-          </p>
-        </div>
-        <button
-          onClick={() => {
-            setShowJobForm(false);
-            setEditingJob(null);
-          }}
-          className="text-gray-400 hover:text-gray-600 transition-colors duration-200"
-        >
-          <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-      </div>
-    </div>
+               {showJobForm && (
+  <div className="fixed inset-0 flex items-center justify-center z-50 bg-transparent">
+    <div className="relative bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto p-6 border border-gray-200">
+      {/* Close Button */}
+      <button
+        onClick={() => {
+          setShowJobForm(false);
+          setEditingJob(null);
+        }}
+        className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-2xl font-bold focus:outline-none"
+      >
+        ×
+      </button>
 
-    <div className="p-6">
+      {/* Title and Description */}
+      <h3 className="text-xl font-bold text-gray-900 mb-1">
+        {editingJob ? 'Edit Job' : 'Post New Job'}
+      </h3>
+      <p className="text-sm text-gray-600 mb-4">
+        {editingJob
+          ? 'Update your job posting details'
+          : 'Create a new job posting to attract candidates'}
+      </p>
+
+      {/* Job Form */}
       <JobForm
         onSubmit={handleCreateUpdateJobs}
         editingJob={editingJob}
@@ -184,7 +177,7 @@ const EmployerDashboard = () => {
       />
     </div>
   </div>
-</Modal>
+)}
 
                 {/* Jobs Section */}
                 <div className="space-y-6">
