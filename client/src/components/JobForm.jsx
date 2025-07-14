@@ -30,7 +30,9 @@ const JobForm = ({ onSubmit, editingJob, onCancel }) => {
         
         try {
             await onSubmit(form);
-            // Form will be reset by the parent component after successful submission
+            if (!editingJob) {
+                setForm({ title: '', description: '', location: '', salary: '', Type: 'full-time' });
+}
         } catch (error) {
             console.error('Error submitting job:', error);
         } finally {

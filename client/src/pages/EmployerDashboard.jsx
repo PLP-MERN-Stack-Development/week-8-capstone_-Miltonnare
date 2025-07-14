@@ -3,6 +3,7 @@ import axios from "axios";
 import { AuthContext } from "../context/authContext";
 import JobForm from "../components/JobForm";
 import JobCard from "../components/JobCard";
+import Modal from "../components/Modal";
 
 
 const EmployerDashboard = () => {
@@ -10,6 +11,7 @@ const EmployerDashboard = () => {
     const [jobs, setJobs] = useState([]);
     const [editingJob, setEditingJob] = useState(null);
     const [loading, setLoading] = useState(true);
+    // const [isModalOpen, setIsModalOpen] = useState(false);
     const [showJobForm, setShowJobForm] = useState(false);
 
     const headers = {
@@ -140,45 +142,49 @@ const EmployerDashboard = () => {
 
                 {/* Job Form Modal */}
                 {console.log('showJobForm state:', showJobForm)}
-                {showJobForm && (
-                    <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-[9999] p-4" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}>
-                        <div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-gray-200 relative z-[10000]">
-                            <div className="p-6 border-b border-gray-200 bg-gradient-to-r from-green-50 to-emerald-50">
-                                <div className="flex items-center justify-between">
-                                    <div>
-                                        <h3 className="text-xl font-bold text-gray-900">
-                                            {editingJob ? 'Edit Job' : 'Post New Job'}
-                                        </h3>
-                                        <p className="text-sm text-gray-600 mt-1">
-                                            {editingJob ? 'Update your job posting details' : 'Create a new job posting to attract candidates'}
-                                        </p>
-                                    </div>
-                                    <button
-                                        onClick={() => {
-                                            setShowJobForm(false);
-                                            setEditingJob(null);
-                                        }}
-                                        className="text-gray-400 hover:text-gray-600 transition-colors duration-200"
-                                    >
-                                        <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                            <div className="p-6">
-                                <JobForm 
-                                    onSubmit={handleCreateUpdateJobs} 
-                                    editingJob={editingJob}
-                                    onCancel={() => {
-                                        setShowJobForm(false);
-                                        setEditingJob(null);
-                                    }}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                )}
+               <Modal isOpen={showJobForm} onClose={() => {
+  setShowJobForm(false);
+  setEditingJob(null);
+}}>
+  <div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-gray-200 relative z-[10000]">
+    <div className="p-6 border-b border-gray-200 bg-gradient-to-r from-green-50 to-emerald-50">
+      <div className="flex items-center justify-between">
+        <div>
+          <h3 className="text-xl font-bold text-gray-900">
+            {editingJob ? 'Edit Job' : 'Post New Job'}
+          </h3>
+          <p className="text-sm text-gray-600 mt-1">
+            {editingJob
+              ? 'Update your job posting details'
+              : 'Create a new job posting to attract candidates'}
+          </p>
+        </div>
+        <button
+          onClick={() => {
+            setShowJobForm(false);
+            setEditingJob(null);
+          }}
+          className="text-gray-400 hover:text-gray-600 transition-colors duration-200"
+        >
+          <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div className="p-6">
+      <JobForm
+        onSubmit={handleCreateUpdateJobs}
+        editingJob={editingJob}
+        onCancel={() => {
+          setShowJobForm(false);
+          setEditingJob(null);
+        }}
+      />
+    </div>
+  </div>
+</Modal>
 
                 {/* Jobs Section */}
                 <div className="space-y-6">
