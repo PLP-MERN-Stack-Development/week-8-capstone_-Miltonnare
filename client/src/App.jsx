@@ -9,6 +9,7 @@ import Navbar from './components/Navbar';
 import { useContext } from 'react';
 import { AuthContext } from './context/authContext';
 import { Toaster } from 'react-hot-toast';
+import MyApplications from './pages/MyApplications';
 
 function App(){
   const { user, logout } = useContext(AuthContext);
@@ -90,6 +91,23 @@ function App(){
     return <EmployerDashboard />;
   };
 
+  // Component to handle my applications page access
+  const MyApplicationsWrapper = () => {
+    if (!user || !user.token) {
+      return <Navigate to="/login" replace />;
+    }
+    if (user.user?.role !== 'jobseeker') {
+      // Redirect to appropriate dashboard based on role
+      if (user.user?.role === 'employer') {
+        return <Navigate to="/employer-dashboard" replace />;
+      } else {
+        // Unknown role, redirect to login
+        return <Navigate to="/login" replace />;
+      }
+    }
+    return <MyApplications />;
+  };
+
   return(
     <>
       <Toaster position="top-right" />
@@ -104,6 +122,7 @@ function App(){
           {/* Protected dashboard routes with role-based access */}
           <Route path="/dashboard" element={<JobSeekerDashboardWrapper />} />
           <Route path="/employer-dashboard" element={<EmployerDashboardWrapper />} />
+          <Route path="/my-applications" element={<MyApplicationsWrapper />} />
 
           {/* Catch-all route - redirect to appropriate page */}
           <Route path="*" element={

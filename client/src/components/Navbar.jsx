@@ -34,6 +34,7 @@ const Navbar = () => {
  
   const navLinks = [
     { to: '/dashboard', label: 'JobSeeker Dashboard', show: isJobSeeker && user },
+    { to: '/my-applications', label: 'My Applications', show: isJobSeeker && user },
     { to: '/employer-dashboard', label: 'Employer Dashboard', show: isEmployer && user },
     { to: '/', label: 'Home', show: !user },
     { to: '/#about', label: 'About', show: location.pathname === '/', isHashLink: true, hash: 'about' },

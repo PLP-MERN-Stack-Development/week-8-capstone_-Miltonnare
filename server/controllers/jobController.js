@@ -76,7 +76,7 @@ const applyToJob = async (req, res) => {
   const job = await Job.findById(jobId);
   if (!job) return res.status(404).json({ message: 'Job not found' });
 
-  // prevent duplicate application
+ 
   const alreadyApplied = job.applications.find(app => app.user.toString() === userId.toString());
   if (alreadyApplied) return res.status(400).json({ message: 'You already applied for this job' });
 
@@ -87,11 +87,53 @@ const applyToJob = async (req, res) => {
 };
 
 
+const getMyApplications = async (req, res) => {
+  const userId = req.user._id;
+  try {
+    const jobs = await Job.find({ 'applications.user': userId })
+      .populate('createdBy', 'name companyName')
+      .populate('applications.user', 'name email');
+
+    const myApplications = [];
+    jobs.forEach(job => {
+      job.applications.forEach(app => {
+        if (
+          app.user &&
+          app.user._id &&
+          app.user._id.toString() === userId.toString()
+        ) {
+          myApplications.push({
+            _id: app._id,
+            job: {
+              _id: job._id,
+              title: job.title,
+              description: job.description,
+              companyName: job.createdBy?.companyName || '',
+              location: job.location,
+              salary: job.salary,
+              jobType: job.jobType,
+            },
+            status: app.status || 'pending',
+            createdAt: app.appliedAt || app.createdAt || job.createdAt,
+          });
+        }
+      });
+    });
+
+    res.json(myApplications);
+  } catch (error) {
+    console.error('Error in getMyApplications:', error);
+    res.status(500).json({ message: 'Failed to fetch applications.' });
+  }
+};
+
+
 module.exports={
     createJob,
     getAllJobs,
     getJobById,
     updateJob,
     deleteJob,
-    applyToJob
+    applyToJob,
+    getMyApplications
 };
