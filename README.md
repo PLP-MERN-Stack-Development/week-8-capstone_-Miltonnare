@@ -51,7 +51,8 @@ jobs-parlour/
 │       ├── pages/
 │       ├── context/   # AuthContext
 │       └── App.jsx
-├── server/            # Express backend
+├── server/      # Express backen
+|   ├── config/
 │   ├── controllers/
 │   ├── models/
 │   ├── routes/
