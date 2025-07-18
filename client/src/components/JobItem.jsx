@@ -29,7 +29,7 @@ const JobItem = ({ job, onApplySuccess }) => {
 
         try {
             const token = user.token;
-            const response = await axios.post(
+            await axios.post(
                 `${import.meta.env.VITE_REACT_APP_JOBS_URL}/${job._id}/apply`,
                 {},
                 {

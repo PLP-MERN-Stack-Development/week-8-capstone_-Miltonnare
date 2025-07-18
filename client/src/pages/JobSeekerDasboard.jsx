@@ -191,7 +191,7 @@ const JobSeekerDashboard = () => {
                   <JobItem 
                     key={job._id || `job-${index}`} 
                     job={job} 
-                    onApplySuccess={(jobId) => {
+                    onApplySuccess={() => {
                      
                       fetchJobs();
                     }}
