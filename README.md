@@ -27,6 +27,7 @@ Coming soon...
 - Browse all available jobs
 - Apply to jobs (only once)
 - Dashboard view of applied jobs 
+- View Jobs Apllied 
 
 ### 💻 Tech Stack
 
