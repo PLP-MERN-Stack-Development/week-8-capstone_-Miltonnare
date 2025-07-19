@@ -68,6 +68,56 @@ JWT is used for authentication
 
 Routes are protected based on roles
 
+## 🛠️ Setup Instructions
+
+### Prerequisites
+- Node.js (v16+ recommended)
+- npm or yarn
+- MongoDB Atlas account (or local MongoDB)
+
+### 1. Clone the Repository
+```bash
+ git clonehttps://github.com/PLP-MERN-Stack-Development/week-8-capstone_-Miltonnare.git
+ cd week-8-capstone_-Miltonnare
+```
+
+### 2. Environment Variables
+Create `.env` files in both `client/` and `server/` directories. Example for `server/.env`:
+```
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+CLIENT_URL=http://localhost:5173
+```
+Example for `client/.env`:
+```
+VITE_REACT_APP_JOBS_URL=http://localhost:3000/api/jobs
+VITE_REACT_APP_CREATEJOBS_URL=http://localhost:3000/api/jobs
+PORT=3000
+```
+
+### 3. Install Dependencies
+```bash
+cd client
+npm install
+cd ../server
+npm install
+```
+
+### 4. Run the Application
+- **Start Backend:**
+  ```bash
+  cd server
+  npm run dev
+  # or: npm start
+  ```
+- **Start Frontend:**
+  ```bash
+  cd client
+  npm run dev
+  ```
+
+- The frontend will run on `http://localhost:5173` and backend on `http://localhost:3000` by default.
+
 ## Deployment
 
  The project was deployed on Render for Backend, Vercel for the Frontend and MongoAtlas for the Database.
