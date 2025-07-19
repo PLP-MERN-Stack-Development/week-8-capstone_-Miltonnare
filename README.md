@@ -84,15 +84,21 @@ Routes are protected based on roles
 ### 2. Environment Variables
 Create `.env` files in both `client/` and `server/` directories. Example for `server/.env`:
 ```
-MONGO_URI=your_mongodb_connection_string
+MONGO_URI=mongodb://localhost:27017/dbname
 JWT_SECRET=your_jwt_secret
 CLIENT_URL=http://localhost:5173
 ```
 Example for `client/.env`:
 ```
+VITE_REACT_APP_REGISTER_URL=http://localhost:3000/api/auth/register
+
+VITE_REACT_APP_LOGIN_URL=http://localhost:3000/api/auth/login
+VITE_REACT_APP_LOGIN_URL=http://localhost:3000/api/auth/login
 VITE_REACT_APP_JOBS_URL=http://localhost:3000/api/jobs
+VITE_REACT_APP_CREATEJOBS_URL=http://localhost:3000/api/jobs/create
 VITE_REACT_APP_CREATEJOBS_URL=http://localhost:3000/api/jobs
-PORT=3000
+VITE_REACT_APP_MY_APPLICATIONS_URL=http://localhost:3000/api/jobs/my-applications
+VITE_REACT_APP_MY_APPLICANTS_URL=http://localhost:3000/api/jobs/applicants
 ```
 
 ### 3. Install Dependencies
