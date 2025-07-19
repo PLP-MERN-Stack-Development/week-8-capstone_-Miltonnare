@@ -131,6 +131,8 @@ npm install
 
 Link: https://jobs-parlour-mern.vercel.app/
 
+PITCH DECK: https://www.canva.com/design/DAGloKdNYqY/k6zWkOhrRRxHyqJANqxbcw/edit?utm_content=DAGloKdNYqY&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+
 👨‍💻 Author
 Milton
 
